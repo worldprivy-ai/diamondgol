@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diamond Gol · Representación de futbolistas</title>
+<meta name="description" content="Diamond Gol — agencia de representación de futbolistas profesionales.">
+<link rel="icon" href="logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b0a; --bg2:#121210; --ink:#f3efe6; --muted:#9a958a;
+    --gold:#c9a45c; --gold2:#e6cf9a; --line:rgba(201,164,92,.22);
+    --serif:'Cormorant Garamond',Georgia,serif; --sans:'Montserrat',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold)}
+  h2{font-family:var(--serif);font-weight:300;font-size:clamp(34px,5vw,56px);line-height:1.1;letter-spacing:.01em;margin:18px 0 0}
+  h2 em{font-style:italic;color:var(--gold2)}
+  .rule{width:48px;height:1px;background:var(--gold);margin:28px 0}
+
+  /* Navegación */
+  nav{position:fixed;inset:0 0 auto 0;z-index:10;transition:background .4s,border-color .4s;border-bottom:1px solid transparent}
+  nav.solid{background:rgba(11,11,10,.86);backdrop-filter:blur(10px);border-color:var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:76px}
+  .brand{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.38em}
+  .brand svg{width:30px}
+  nav ul{display:flex;gap:36px;list-style:none;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+  nav ul a{transition:color .3s}
+  nav ul a:hover{color:var(--gold2)}
+
+  /* Portada */
+  .hero{min-height:100svh;display:grid;place-items:center;text-align:center;position:relative;overflow:hidden;
+        background:radial-gradient(ellipse at 50% 40%,rgba(201,164,92,.10),transparent 60%)}
+  .hero .gem{width:min(170px,40vw);margin:0 auto 34px;opacity:0;animation:rise 1.6s .2s ease forwards}
+  .hero .gem path,.hero .gem line,.hero .gem polyline{stroke-dasharray:420;stroke-dashoffset:420;animation:draw 2.6s .3s ease forwards}
+  .hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(46px,9vw,104px);letter-spacing:.22em;line-height:1;margin-right:-.22em;
+           opacity:0;animation:rise 1.4s .9s ease forwards}
+  .hero h1 span{display:block;font-size:.62em;letter-spacing:.5em;margin-top:.35em;margin-right:-.5em;color:var(--gold2)}
+  .hero p{margin-top:34px;opacity:0;animation:rise 1.4s 1.4s ease forwards}
+  .scroll{position:absolute;bottom:34px;left:50%;width:1px;height:56px;background:linear-gradient(var(--gold),transparent);opacity:.7}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  section{padding:140px 0}
+  .about{display:grid;grid-template-columns:1fr 1.1fr;gap:80px;align-items:start}
+  .about p{color:var(--muted);font-size:15px;max-width:52ch}
+  .about p + p{margin-top:18px}
+  .pillars{display:grid;gap:0;border-top:1px solid var(--line);margin-top:8px}
+  .pillar{display:grid;grid-template-columns:52px 1fr;padding:26px 0;border-bottom:1px solid var(--line)}
+  .pillar b{font-family:var(--serif);font-weight:400;font-size:22px;color:var(--gold)}
+  .pillar h3{font-family:var(--serif);font-weight:400;font-size:24px;letter-spacing:.02em}
+  .pillar p{font-size:14px;margin-top:4px}
+
+  /* Cifras */
+  .stats{background:var(--bg2);border-block:1px solid var(--line);padding:90px 0}
+  .stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);text-align:center}
+  .stat + .stat{border-left:1px solid var(--line)}
+  .stat strong{display:block;font-family:var(--serif);font-weight:300;font-size:clamp(44px,6vw,72px);line-height:1;color:var(--gold2)}
+  .stat span{display:block;margin-top:14px;font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted)}
+
+  /* Presencia */
+  .head{display:flex;justify-content:space-between;align-items:end;gap:40px;flex-wrap:wrap;margin-bottom:64px}
+  .head p.note{color:var(--muted);font-size:14px;max-width:38ch}
+  .offices{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+  .card{background:var(--bg);padding:44px 30px 38px;position:relative;transition:background .4s}
+  .card:hover{background:var(--bg2)}
+  .card .num{position:absolute;top:26px;right:28px;font-family:var(--serif);font-size:15px;color:var(--muted)}
+  .card .pos{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+  .card h3{font-family:var(--serif);font-weight:400;font-size:34px;line-height:1.1;margin:18px 0 10px}
+  .card p.sub{font-size:12px;color:var(--muted);letter-spacing:.06em}
+  .card .line{position:absolute;left:30px;bottom:0;height:1px;width:0;background:var(--gold);transition:width .5s}
+  .card:hover .line{width:calc(100% - 60px)}
+  .private{margin-top:56px;display:flex;gap:22px;align-items:center;justify-content:center;text-align:left;color:var(--muted);font-size:13px}
+  .private svg{width:22px;flex:none;color:var(--gold)}
+  @media (max-width:820px){ .offices{grid-template-columns:1fr 1fr} }
+  @media (max-width:480px){ .offices{grid-template-columns:1fr} }
+
+  /* Contacto */
+  .contact{text-align:center;background:radial-gradient(ellipse at 50% 100%,rgba(201,164,92,.10),transparent 65%)}
+  .contact .rule{margin:28px auto}
+  .contact p{color:var(--muted);max-width:46ch;margin:0 auto}
+  .owner{margin-top:56px}
+  .owner strong{display:block;font-family:var(--serif);font-weight:400;font-size:30px}
+  .owner span{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold)}
+  .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:44px}
+  .btn{border:1px solid var(--gold);padding:16px 34px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold2);transition:all .35s}
+  .btn:hover{background:var(--gold);color:var(--bg)}
+  .btn.ghost{border-color:var(--line);color:var(--muted)}
+  .btn.ghost:hover{border-color:var(--gold);background:none;color:var(--gold2)}
+
+  footer{border-top:1px solid var(--line);padding:40px 0;font-size:11px;letter-spacing:.2em;color:var(--muted)}
+  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity 1.1s ease,transform 1.1s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:820px){
+    nav ul{display:none}
+    section{padding:96px 0}
+    .about{grid-template-columns:1fr;gap:40px}
+    .stats .wrap{grid-template-columns:1fr 1fr;row-gap:48px}
+    .stat:nth-child(3){border-left:0}
+  }
+  @media (max-width:420px){ .wrap{padding:0 16px} .card{padding:30px 22px 26px} }
+  @media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} .hero *,.reveal{opacity:1!important;transform:none!important;stroke-dashoffset:0!important} }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="gem" viewBox="0 0 120 84" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M24 6H96L116 28L60 80L4 28Z"/>
+    <line x1="4" y1="28" x2="116" y2="28"/>
+    <polyline points="24,6 36,28 48,6 60,28 72,6 84,28 96,6"/>
+    <polyline points="36,28 60,80 84,28"/>
+    <line x1="60" y1="28" x2="60" y2="80"/>
+  </symbol>
+</svg>
+
+<nav id="nav">
+  <div class="wrap">
+    <a class="brand" href="#inicio"><svg viewBox="0 0 120 84" style="color:var(--gold)"><use href="#gem"/></svg>DIAMOND GOL</a>
+    <ul>
+      <li><a href="#agencia">Agencia</a></li>
+      <li><a href="#presencia">Presencia</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="inicio">
+  <div>
+    <svg class="gem" viewBox="0 0 120 84" fill="none" stroke="#c9a45c" stroke-width="1.6" stroke-linejoin="round">
+      <path d="M24 6H96L116 28L60 80L4 28Z"/>
+      <line x1="4" y1="28" x2="116" y2="28"/>
+      <polyline points="24,6 36,28 48,6 60,28 72,6 84,28 96,6"/>
+      <polyline points="36,28 60,80 84,28"/>
+      <line x1="60" y1="28" x2="60" y2="80"/>
+    </svg>
+    <h1>DIAMOND<span>GOL</span></h1>
+    <p class="eyebrow">Representación de futbolistas</p>
+  </div>
+  <div class="scroll"></div>
+</header>
+
+<section id="agencia">
+  <div class="wrap about">
+    <div class="reveal">
+      <p class="eyebrow">La agencia</p>
+      <h2>El talento se pule.<br><em>Como un diamante.</em></h2>
+      <div class="rule"></div>
+      <p>Diamond Gol es una agencia de representación de futbolistas profesionales. Acompañamos a cada jugador dentro y fuera de la cancha, con trato cercano, discreción y una visión de carrera a largo plazo.</p>
+      <p>Con presencia en México, Argentina, Reino Unido y España, conectamos a nuestros jugadores con clubes de América y Europa donde puedan crecer.</p>
+    </div>
+    <div class="pillars reveal">
+      <div class="pillar"><b>I</b><div><h3>Representación</h3><p>Negociación de contratos, traspasos y renovaciones.</p></div></div>
+      <div class="pillar"><b>II</b><div><h3>Carrera</h3><p>Planificación deportiva y búsqueda del club adecuado.</p></div></div>
+      <div class="pillar"><b>III</b><div><h3>Acompañamiento</h3><p>Asesoría personal, imagen y relación con los medios.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="wrap">
+    <div class="stat reveal"><strong>4</strong><span>Países</span></div>
+    <div class="stat reveal"><strong>2</strong><span>Continentes</span></div>
+    <div class="stat reveal"><strong>24/7</strong><span>Atención al jugador</span></div>
+    <div class="stat reveal"><strong>100%</strong><span>Confidencial</span></div>
+  </div>
+</div>
+
+<section id="presencia">
+  <div class="wrap">
+    <div class="head reveal">
+      <div>
+        <p class="eyebrow">Presencia</p>
+        <h2>De América <em>a Europa</em></h2>
+      </div>
+      <p class="note">Una red internacional que abre puertas en los principales mercados del futbol.</p>
+    </div>
+    <div class="offices reveal">
+      <article class="card"><span class="num">01</span><p class="pos">México</p><h3>Ciudad de México</h3><p class="sub">Sede central</p><span class="line"></span></article>
+      <article class="card"><span class="num">02</span><p class="pos">Argentina</p><h3>Buenos Aires</h3><p class="sub">Sudamérica</p><span class="line"></span></article>
+      <article class="card"><span class="num">03</span><p class="pos">Reino Unido</p><h3>Londres</h3><p class="sub">Europa</p><span class="line"></span></article>
+      <article class="card"><span class="num">04</span><p class="pos">España</p><h3>Madrid</h3><p class="sub">Europa</p><span class="line"></span></article>
+    </div>
+    <div class="private reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="10" width="16" height="11" rx="1"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      <span>Por respeto a nuestros jugadores, la cartera de representados es confidencial.<br>Clubes interesados pueden solicitarla por contacto directo.</span>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contacto">
+  <div class="wrap reveal">
+    <p class="eyebrow">Contacto</p>
+    <h2>Hablemos de <em>tu carrera</em></h2>
+    <div class="rule"></div>
+    <p>Clubes, jugadores y familias: escríbenos y te respondemos personalmente.</p>
+    <div class="owner">
+      <strong>Oliver Pérez Robles</strong>
+      <span>Propietario</span>
+    </div>
+    <div class="btns">
+      <a class="btn" id="mail" href="#">Escribir un correo</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y"></span> DIAMOND GOL</span>
+    <span>México · Argentina · Reino Unido · España</span>
+  </div>
+</footer>
+
+<script>
+  // Cambia aquí el correo de contacto
+  const EMAIL = 'contacto@diamondgol.com';
+
+  document.getElementById('mail').href = 'mailto:' + EMAIL;
+  document.getElementById('y').textContent = new Date().getFullYear();
+
+  const nav = document.getElementById('nav');
+  const onScroll = ()=>nav.classList.toggle('solid', scrollY > 40);
+  addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }), {threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
